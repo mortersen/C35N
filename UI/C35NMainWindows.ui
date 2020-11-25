@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>陈三五娘数据库</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,6">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,9">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,3,1,1,1">
       <item>
@@ -69,8 +69,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>26</height>
+     <width>1024</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

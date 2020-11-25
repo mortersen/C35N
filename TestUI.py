@@ -2,11 +2,15 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication,QWidget
 import sys
 
+def do():
+    print(111)
+
 if __name__ == '__main__':
 
-    mainapp = QApplication(sys.argv)
+    mainApp = QApplication(sys.argv)
 
-    dataViewWideget = uic.loadUi("UI/DataViewWidget.ui")
+    dataViewWideget = uic.loadUi("UI/C35NMainWindows.ui")
+
     dataViewWideget.show()
-    sys.exit(mainapp.exec())
+    sys.exit(mainApp.exec())
 
