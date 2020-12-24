@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>陈三五娘数据库系统</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../RES/img.qrc">
+    <normaloff>:/Icon/goodFish.PNG</normaloff>:/Icon/goodFish.PNG</iconset>
+  </property>
+  <widget class="QWidget" name="workView"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_comicBook"/>
+   <addaction name="separator"/>
+   <addaction name="action_DB"/>
+   <addaction name="action_SearchContext"/>
+   <addaction name="action_Setting"/>
+   <addaction name="separator"/>
+  </widget>
+  <action name="action_DB">
+   <property name="icon">
+    <iconset resource="../RES/img.qrc">
+     <normaloff>:/Icon/home.png</normaloff>:/Icon/home.png</iconset>
+   </property>
+   <property name="text">
+    <string>数据库</string>
+   </property>
+   <property name="toolTip">
+    <string>打开数据库视窗</string>
+   </property>
+  </action>
+  <action name="action_SearchContext">
+   <property name="icon">
+    <iconset resource="../RES/img.qrc">
+     <normaloff>:/Icon/query.png</normaloff>:/Icon/query.png</iconset>
+   </property>
+   <property name="text">
+    <string>SearchContext</string>
+   </property>
+   <property name="toolTip">
+    <string>数据库检索</string>
+   </property>
+  </action>
+  <action name="action_Setting">
+   <property name="icon">
+    <iconset resource="../RES/img.qrc">
+     <normaloff>:/Icon/setup.png</normaloff>:/Icon/setup.png</iconset>
+   </property>
+   <property name="text">
+    <string>Setting</string>
+   </property>
+   <property name="toolTip">
+    <string>系统设置</string>
+   </property>
+  </action>
+  <action name="action_comicBook">
+   <property name="icon">
+    <iconset resource="../RES/img.qrc">
+     <normaloff>:/Icon/address.png</normaloff>:/Icon/address.png</iconset>
+   </property>
+   <property name="text">
+    <string>comicBook</string>
+   </property>
+   <property name="toolTip">
+    <string>《陈三五娘（彩绘连环画）》全本 绘画：孔继昭</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../RES/img.qrc"/>
+ </resources>
+ <connections/>
+</ui>
