@@ -10,6 +10,11 @@ from UI.UI_MainWindow import Ui_mainWindow
 from UI.UI_ComicBook import Ui_comicBook
 from UI.UI_DBSourceWindow import Ui_DBSourceView
 from UI.UI_Dlgabout import Ui_About
+#导入字段的详细信息UI界面
+from UI.UI_BookDetail import Ui_BookDetail
+from UI.UI_PeriodicalDetail import Ui_PeriodicalDetail
+from UI.UI_DissertationDetail import Ui_DissertationDetail
+from UI.UI_ConferencePaperDetail import Ui_ConferencePaperDetail
 
 import img_rc
 
@@ -57,6 +62,9 @@ class MainWindow(QMainWindow):
         self.DBSourceView.setupUi(self.DBView)
         self.DBView.setObjectName("DBView")
         self.DBSourceView.tree_LeftView.setHeaderHidden(True)
+        self.BOOKDETAIL = Ui_ConferencePaperDetail()
+        self.BOOKDETAIL.setupUi(self.DBSourceView.widget_RightDetail)
+
         self.isOpenDBView = False
         self.DBSourceView.tree_LeftView.clicked.connect(self.on_DBViewTree_Clicked)
 

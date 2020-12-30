@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,12">
+  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,12,8">
    <item>
     <widget class="QTreeWidget" name="tree_LeftView">
      <column>
@@ -152,7 +152,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>460</width>
+          <width>350</width>
           <height>283</height>
          </rect>
         </property>
@@ -283,6 +283,9 @@
       </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_RightDetail" native="true"/>
    </item>
   </layout>
  </widget>
