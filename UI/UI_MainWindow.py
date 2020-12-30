@@ -51,12 +51,17 @@ class Ui_mainWindow(object):
         icon4.addPixmap(QtGui.QPixmap(":/Icon/address.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_comicBook.setIcon(icon4)
         self.action_comicBook.setObjectName("action_comicBook")
-        self.toolBar.addAction(self.action_comicBook)
-        self.toolBar.addSeparator()
+        self.action_About = QtWidgets.QAction(mainWindow)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/Icon/info.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_About.setIcon(icon5)
+        self.action_About.setObjectName("action_About")
         self.toolBar.addAction(self.action_DB)
+        self.toolBar.addAction(self.action_comicBook)
         self.toolBar.addAction(self.action_SearchContext)
         self.toolBar.addAction(self.action_Setting)
         self.toolBar.addSeparator()
+        self.toolBar.addAction(self.action_About)
 
         self.retranslateUi(mainWindow)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
@@ -73,6 +78,8 @@ class Ui_mainWindow(object):
         self.action_Setting.setToolTip(_translate("mainWindow", "系统设置"))
         self.action_comicBook.setText(_translate("mainWindow", "comicBook"))
         self.action_comicBook.setToolTip(_translate("mainWindow", "《陈三五娘（彩绘连环画）》全本 绘画：孔继昭"))
+        self.action_About.setText(_translate("mainWindow", "About"))
+        self.action_About.setToolTip(_translate("mainWindow", "<html><head/><body><p>关于</p></body></html>"))
 import img_rc
 
 

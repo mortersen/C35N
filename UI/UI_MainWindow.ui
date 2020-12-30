@@ -39,12 +39,12 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_comicBook"/>
-   <addaction name="separator"/>
    <addaction name="action_DB"/>
+   <addaction name="action_comicBook"/>
    <addaction name="action_SearchContext"/>
    <addaction name="action_Setting"/>
    <addaction name="separator"/>
+   <addaction name="action_About"/>
   </widget>
   <action name="action_DB">
    <property name="icon">
@@ -92,6 +92,18 @@
    </property>
    <property name="toolTip">
     <string>《陈三五娘（彩绘连环画）》全本 绘画：孔继昭</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset resource="../RES/img.qrc">
+     <normaloff>:/Icon/info.png</normaloff>:/Icon/info.png</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;关于&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>
