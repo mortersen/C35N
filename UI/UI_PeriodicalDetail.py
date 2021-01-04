@@ -109,24 +109,6 @@ class Ui_PeriodicalDetail(object):
         self.horizontalLayout_9.addWidget(self.textEdit_Abstract)
         self.verticalLayout.addLayout(self.horizontalLayout_9)
         self.verticalLayout_2.addWidget(self.groupBox)
-        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem)
-        self.btn_ReadPdf = QtWidgets.QPushButton(PeriodicalDetail)
-        self.btn_ReadPdf.setObjectName("btn_ReadPdf")
-        self.horizontalLayout_12.addWidget(self.btn_ReadPdf)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem1)
-        self.btn_Download = QtWidgets.QPushButton(PeriodicalDetail)
-        self.btn_Download.setObjectName("btn_Download")
-        self.horizontalLayout_12.addWidget(self.btn_Download)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem2)
-        self.horizontalLayout_12.setStretch(0, 1)
-        self.horizontalLayout_12.setStretch(2, 1)
-        self.horizontalLayout_12.setStretch(4, 1)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_12)
 
         self.retranslateUi(PeriodicalDetail)
         QtCore.QMetaObject.connectSlotsByName(PeriodicalDetail)
@@ -144,8 +126,6 @@ class Ui_PeriodicalDetail(object):
         self.label_8.setText(_translate("PeriodicalDetail", "卷："))
         self.label_7.setText(_translate("PeriodicalDetail", "关键字："))
         self.label_9.setText(_translate("PeriodicalDetail", "摘  要："))
-        self.btn_ReadPdf.setText(_translate("PeriodicalDetail", "阅读"))
-        self.btn_Download.setText(_translate("PeriodicalDetail", "下载"))
 
 
 if __name__ == "__main__":

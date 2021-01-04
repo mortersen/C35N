@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DBTreeMain</class>
+ <widget class="QWidget" name="DBTreeMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>714</width>
+    <height>365</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,8">
+   <item>
+    <widget class="QTreeWidget" name="tree_LeftView">
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>陈三五娘文献数据库</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>现代研究文献</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>期刊</string>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>图书</string>
+        </property>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>学位论文</string>
+        </property>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>会议论文</string>
+        </property>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>民间原始文献（手抄本）</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>戏曲</string>
+        </property>
+        <property name="text">
+         <string>4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>歌册</string>
+        </property>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>南音曲谱</string>
+        </property>
+        <property name="text">
+         <string>6</string>
+        </property>
+       </item>
+      </item>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_RightView" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QVBoxLayout" name="layout_RightView"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../RES/img.qrc"/>
+ </resources>
+ <connections/>
+</ui>

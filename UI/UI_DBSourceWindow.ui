@@ -6,77 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>604</width>
+    <width>714</width>
     <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,12,8">
-   <item>
-    <widget class="QTreeWidget" name="tree_LeftView">
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>陈三五娘文献数据库</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>现代研究文献</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>期刊</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>图书</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>学位论文</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>会议论文</string>
-        </property>
-       </item>
-      </item>
-      <item>
-       <property name="text">
-        <string>民间原始文献（手抄本）</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>戏曲</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>歌册</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>南音曲谱</string>
-        </property>
-       </item>
-      </item>
-     </item>
-    </widget>
-   </item>
+  <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="7,3">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,0,2,1,1,2,20">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,8,2,1,1,3">
        <item>
         <widget class="QPushButton" name="btn_PrePage">
          <property name="text">
@@ -98,6 +39,19 @@
            <normaloff>:/Icon/arrowright.png</normaloff>:/Icon/arrowright.png</iconset>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QLabel" name="label">
@@ -127,37 +81,10 @@
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
      <item>
-      <widget class="QScrollArea" name="scrollArea_Main">
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>350</width>
-          <height>283</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
+      <widget class="QTableView" name="tableView"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -285,7 +212,70 @@
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="widget_RightDetail" native="true"/>
+    <layout class="QVBoxLayout" name="verticalLayout_4" stretch="9,1">
+     <item>
+      <widget class="QWidget" name="detailWidget" native="true">
+       <layout class="QVBoxLayout" name="detailLayout"/>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_ReadPDF">
+         <property name="text">
+          <string>阅读</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_Download">
+         <property name="text">
+          <string>下载</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

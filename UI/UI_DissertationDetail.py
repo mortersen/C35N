@@ -96,21 +96,6 @@ class Ui_DissertationDetail(object):
         self.verticalLayout.addWidget(self.textEdit_Abstract)
         self.verticalLayout_2.addWidget(self.groupBox_2)
         self.verticalLayout_3.addWidget(self.groupBox)
-        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem)
-        self.btn_ReadPdf = QtWidgets.QPushButton(DissertationDetail)
-        self.btn_ReadPdf.setObjectName("btn_ReadPdf")
-        self.horizontalLayout_10.addWidget(self.btn_ReadPdf)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem1)
-        self.btn_Download = QtWidgets.QPushButton(DissertationDetail)
-        self.btn_Download.setObjectName("btn_Download")
-        self.horizontalLayout_10.addWidget(self.btn_Download)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem2)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_10)
 
         self.retranslateUi(DissertationDetail)
         QtCore.QMetaObject.connectSlotsByName(DissertationDetail)
@@ -127,8 +112,6 @@ class Ui_DissertationDetail(object):
         self.label_2.setText(_translate("DissertationDetail", "发表年份："))
         self.label_7.setText(_translate("DissertationDetail", "关 键 字："))
         self.groupBox_2.setTitle(_translate("DissertationDetail", "摘   要"))
-        self.btn_ReadPdf.setText(_translate("DissertationDetail", "阅读"))
-        self.btn_Download.setText(_translate("DissertationDetail", "下载"))
 
 
 if __name__ == "__main__":

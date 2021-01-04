@@ -91,23 +91,7 @@ class Ui_BookDetail(object):
         self.horizontalLayout_8.addWidget(self.textEdit_Abstract)
         self.verticalLayout_2.addLayout(self.horizontalLayout_8)
         self.verticalLayout.addWidget(self.groupBox)
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.btn_ReadPdf = QtWidgets.QPushButton(BookDetail)
-        self.btn_ReadPdf.setObjectName("btn_ReadPdf")
-        self.horizontalLayout.addWidget(self.btn_ReadPdf)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem1)
-        self.btn_Download = QtWidgets.QPushButton(BookDetail)
-        self.btn_Download.setObjectName("btn_Download")
-        self.horizontalLayout.addWidget(self.btn_Download)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem2)
-        self.verticalLayout.addLayout(self.horizontalLayout)
         self.verticalLayout.setStretch(0, 9)
-        self.verticalLayout.setStretch(1, 1)
 
         self.retranslateUi(BookDetail)
         QtCore.QMetaObject.connectSlotsByName(BookDetail)
@@ -124,8 +108,6 @@ class Ui_BookDetail(object):
         self.label_6.setText(_translate("BookDetail", "出版社："))
         self.label_7.setText(_translate("BookDetail", "关键字："))
         self.label_8.setText(_translate("BookDetail", "摘  要："))
-        self.btn_ReadPdf.setText(_translate("BookDetail", "阅读"))
-        self.btn_Download.setText(_translate("BookDetail", "下载"))
 
 
 if __name__ == "__main__":
