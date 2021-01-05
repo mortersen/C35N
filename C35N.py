@@ -168,20 +168,19 @@ class MainWindow(QMainWindow):
                 child = self.DBTreeMain.layout_RightView.takeAt(0)
                 child.widget().deleteLater()
             if index == 0:#期刊
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentQK())
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentQK(self.DB))
             elif index == 1:#图书
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentTS())
-
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentTS(self.DB))
             elif index == 2:#学位论文
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentXWLW())
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentXWLW(self.DB))
             elif index == 3:#会议论文
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentHYLW())
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentHYLW(self.DB))
             elif index == 4:#戏曲
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentXQ())
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentXQ(self.DB))
             elif index == 5:#歌册
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentQP())
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentQP(self.DB))
             elif index == 6:#南音
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentNY())
+                self.DBTreeMain.layout_RightView.addWidget(DBDocumentNY(self.DB))
 
     #数据库浏览-下一页
     def DBViewNextPage(self):

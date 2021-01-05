@@ -133,8 +133,8 @@ class Ui_DBSourceView(object):
         self.verticalLayout_4.setStretch(0, 9)
         self.verticalLayout_4.setStretch(1, 1)
         self.horizontalLayout_4.addLayout(self.verticalLayout_4)
-        self.horizontalLayout_4.setStretch(0, 7)
-        self.horizontalLayout_4.setStretch(1, 3)
+        self.horizontalLayout_4.setStretch(0, 6)
+        self.horizontalLayout_4.setStretch(1, 4)
 
         self.retranslateUi(DBSourceView)
         QtCore.QMetaObject.connectSlotsByName(DBSourceView)
