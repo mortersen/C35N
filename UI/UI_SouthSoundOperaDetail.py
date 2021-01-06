@@ -60,6 +60,12 @@ class Ui_SouthSoundOperaDetail(object):
         self.lineEdit_Origin.setObjectName("lineEdit_Origin")
         self.horizontalLayout_4.addWidget(self.lineEdit_Origin)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+        self.verticalLayout.setStretch(0, 2)
+        self.verticalLayout.setStretch(1, 2)
+        self.verticalLayout.setStretch(2, 2)
+        self.verticalLayout.setStretch(3, 4)
         self.verticalLayout_2.addWidget(self.groupBox)
         self.verticalLayout_2.setStretch(0, 6)
 
@@ -71,7 +77,7 @@ class Ui_SouthSoundOperaDetail(object):
         SouthSoundOperaDetail.setWindowTitle(_translate("SouthSoundOperaDetail", "Form"))
         self.groupBox.setTitle(_translate("SouthSoundOperaDetail", "南音曲谱信息"))
         self.label.setText(_translate("SouthSoundOperaDetail", "曲谱名："))
-        self.label_2.setText(_translate("SouthSoundOperaDetail", "作者："))
+        self.label_2.setText(_translate("SouthSoundOperaDetail", "作  者："))
         self.label_3.setText(_translate("SouthSoundOperaDetail", "页码："))
         self.label_4.setText(_translate("SouthSoundOperaDetail", "资源来源："))
 
