@@ -1,6 +1,6 @@
 from PyQt5.QtSql import QSqlQuery,QSqlQueryModel
 from PyQt5.QtWidgets import QApplication,QWidget,QDataWidgetMapper,QAbstractItemView,QMessageBox
-from PyQt5.QtCore import Qt,pyqtSlot
+from PyQt5.QtCore import Qt,pyqtSignal
 
 from UI.UI_TraditionalOperaDetail import Ui_TraditionalOperaDetail
 from UI.UI_SouthSoundOperaDetail import Ui_SouthSoundOperaDetail
@@ -13,6 +13,9 @@ from UI.UI_DBSourceWindow import Ui_DBSourceView
 
 #文献基础类
 class DBDocumentBase(QWidget):
+    signal_ReadPdf = pyqtSignal(str,str)#1:MD5,2:标题
+    signal_Download = pyqtSignal(str,str,str)#1:表名，2:MD5,3:标题
+
     def __init__(self,DB):
         super().__init__()
         self.baseUI = Ui_DBSourceView()
@@ -47,7 +50,18 @@ class DBDocumentBase(QWidget):
         self.baseUI.btn_PrePage.released.connect(self.on_PrePage)
         self.baseUI.btn_NextPage.released.connect(self.on_NextPage)
         self.baseUI.btn_Goto.released.connect(self.on_Goto)
+        #发送自定义信号
+        self.baseUI.btn_ReadPDF.released.connect(self.on_ReadPDF_SignalEmit)
+        self.baseUI.btn_Download.released.connect(self.on_Download_SignalEmit)
 
+    #发射阅读PDF的信号给主窗口
+    def on_ReadPDF_SignalEmit(self):
+        print(self.objectName())
+        pass
+    #发射下载的信号给主窗口
+    def on_Download_SignalEmit(self):
+        print(self.objectName())
+        pass
     #查询总记录数
     def getTotalRecord(self):
         pass
@@ -73,7 +87,7 @@ class DBDocumentBase(QWidget):
         print(self.objectName())
     #选择模型-行切换是更新组件界面
     def do_currentRowChanged(self,current,previous):
-        print(current.row())
+        #print(current.row())
         self.mapper.setCurrentIndex(current.row())
 
     #计算总页数
@@ -85,6 +99,20 @@ class DBDocumentBase(QWidget):
 
     def get_EachRecordOfPage(self):
         pass
+
+    # 处理阅读按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_ReadPDF_SignalEmit(self):
+        index = self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            index = 0
+        #print("阅读按钮信号----->" + str(index))
+        # 获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        #print(Title)
+        self.signal_ReadPdf.emit(MD5, Title)
+
 
 #封装戏曲
 class DBDocumentXQ(DBDocumentBase):
@@ -104,6 +132,7 @@ class DBDocumentXQ(DBDocumentBase):
 
         self.recordQuery(0)
 
+
         self.queryModel.setHeaderData(0,Qt.Horizontal,"戏曲名")
         self.queryModel.setHeaderData(1,Qt.Horizontal,"作者")
         self.queryModel.setHeaderData(2,Qt.Horizontal,"收录来源")
@@ -120,6 +149,19 @@ class DBDocumentXQ(DBDocumentBase):
         self.mapper.addMapping(self.UI.textEdit_Summary, 4)
 
         self.mapper.toFirst()
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("TraditionalOpera",MD5,Title)
 
     #执行查询模型
     def recordQuery(self,Index):
@@ -596,7 +638,6 @@ class DBDocumentQP(DBDocumentBase):
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
 
-
 #封装会议论文
 class DBDocumentHYLW(DBDocumentBase):
     def __init__(self,DB):
@@ -664,7 +705,6 @@ class DBDocumentHYLW(DBDocumentBase):
             return self.query.at() + 1
         except Exception:
             print(Exception)
-
 
     # 设置每页显示记录数量
     def get_EachRecordOfPage(self):

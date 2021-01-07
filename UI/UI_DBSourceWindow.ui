@@ -6,135 +6,78 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>714</width>
+    <width>1576</width>
     <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="6,4">
+  <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="7,4">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,8,2,1,1,3">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QPushButton" name="btn_PrePage">
-         <property name="text">
-          <string>前一页</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../RES/img.qrc">
-           <normaloff>:/Icon/arrowleft.png</normaloff>:/Icon/arrowleft.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_NextPage">
-         <property name="text">
-          <string>后一页</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../RES/img.qrc">
-           <normaloff>:/Icon/arrowright.png</normaloff>:/Icon/arrowright.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>转到第</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_WhichPage"/>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>页</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_Goto">
-         <property name="text">
-          <string>GO</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../RES/img.qrc">
-           <normaloff>:/Icon/refresh.png</normaloff>:/Icon/refresh.png</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QTableView" name="tableView"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>总共</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lab_TotalPages">
-         <property name="minimumSize">
-          <size>
-           <width>10</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>页</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>当前第</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lab_CurrentPage">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>页</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QComboBox" name="comboBox_SearchBy">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>按标题查询</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>按作者</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>按关键字</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>按主要内容</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_Condition">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btn_Query">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../RES/img.qrc">
+             <normaloff>:/Icon/query.png</normaloff>:/Icon/query.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="horizontalSpacer_2">
@@ -150,62 +93,251 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QPushButton" name="btn_Reflash">
          <property name="text">
-          <string>共</string>
+          <string>重新载入</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normalon>:/Icon/convert.png</normalon>
+          </iconset>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lab_Record">
-         <property name="minimumSize">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>共</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lab_Record">
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>111</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>条</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>每页</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comBox_EachRecordOfPage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>0</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>20</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>30</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>40</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>50</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTableView" name="tableView"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="4,1,2,1,2,4">
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>10</width>
-           <height>0</height>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_PrePage">
          <property name="text">
-          <string>111</string>
+          <string>前一页</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../RES/img.qrc">
+           <normaloff>:/Icon/arrowleft.png</normaloff>:/Icon/arrowleft.png</iconset>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_8">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>第</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lab_CurrentPage">
+           <property name="minimumSize">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>页</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>共</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lab_TotalPages">
+           <property name="minimumSize">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>页</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_NextPage">
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
          <property name="text">
-          <string>条</string>
+          <string>后一页</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../RES/img.qrc">
+           <normaloff>:/Icon/arrowright.png</normaloff>:/Icon/arrowright.png</iconset>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>每页</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>到第</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_WhichPage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>页</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_Goto">
+           <property name="text">
+            <string>GO</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../RES/img.qrc">
+             <normaloff>:/Icon/refresh.png</normaloff>:/Icon/refresh.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QComboBox" name="comBox_EachRecordOfPage">
-         <item>
-          <property name="text">
-           <string>20</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>30</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>40</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>50</string>
-          </property>
-         </item>
-        </widget>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>

@@ -40,7 +40,7 @@ class Ui_DBTreeMain(object):
         self.horizontalLayout_2.addLayout(self.layout_RightView)
         self.horizontalLayout.addWidget(self.widget_RightView)
         self.horizontalLayout.setStretch(0, 2)
-        self.horizontalLayout.setStretch(1, 8)
+        self.horizontalLayout.setStretch(1, 10)
 
         self.retranslateUi(DBTreeMain)
         QtCore.QMetaObject.connectSlotsByName(DBTreeMain)

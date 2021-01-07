@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (QWidget,QApplication,QListView,QListWidget,QLabel,
                                 QVBoxLayout,QListWidgetItem,QFileDialog
                              )
 from PyQt5.QtGui import QImage,QPixmap
-from PyQt5.QtCore import QSize,Qt
+from PyQt5.QtCore import QSize,Qt,pyqtSignal
 
 from UI.UI_ReadPDF import Ui_widgetReadPDF
 
@@ -37,9 +37,9 @@ class ShowImageWidget(QLabel):
             height = int(self.m_pixmap.height() * self.m_factor)
             self.setPixmap(self.m_pixmap.scaled(QSize(width, height)))
 
-
-
 class WidgetPDF(QWidget,Ui_widgetReadPDF):
+
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -57,7 +57,7 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
 
         self.iniUi()
         self.init_event_plot()
-        self.open_doc()
+        #self.open_doc()
 
     # 初始化listWidget
     def iniUi(self):
@@ -68,7 +68,7 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
         self.listWidget.setResizeMode(QListView.Adjust)
         self.listWidget.setSpacing(12)  # 间距大小
         self.listWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.showMaximized()
+        #self.showMaximized()
 
     # 设置窗口菜单控件状态
     def set_window_status(self):
@@ -222,10 +222,37 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
             0
         )
 
+class WidgetPDFStream(WidgetPDF):
+    def __init__(self,stream,title):
+        super().__init__()
+        #print(type(stream))
+        self.stream = bytearray(stream)
+        self.docTitle = title
+        self.open_docByStream()
+
+    def open_docByStream(self):
+        try:
+            #row = self.cur.execute("SELECT FileBinary From BookFile where ID = ?;", (3,))
+            #self.pdfName = row.fetchone()[0]
+            #print("OPen PDF:::")
+            #print(type(self.stream))
+            self.docDoc = fitz.open(None,self.stream,'PDF')
+                #self.docDoc = fitz.open(self.pdfName)
+            #print(self.docDoc)
+            self.bOpened = True  # 设置文件打开
+                #self.labelFileName.setText(self.pdfName)
+            self.refresh_listWidget()
+                # 显示第一页
+            self.nCurr = 0
+            self.show_current_page()
+        except:
+            pass
+
+
 if __name__ == '__main__':
     mainAPP = QApplication(sys.argv)
-
     mainWin = WidgetPDF()
+    #mainWin = WidgetPDFStream(1,2,3)
     mainWin.show()
 
     sys.exit(mainAPP.exec_())

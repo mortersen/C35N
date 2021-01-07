@@ -1,11 +1,13 @@
 import sys
+from PDFWidget import WidgetPDF,WidgetPDFStream
 from PyQt5.QtWidgets import (
     QApplication,QMainWindow,QTabWidget,QWidget,QMessageBox,QHBoxLayout,QPushButton,
     QLabel,QDialog,QDataWidgetMapper,QTableView
 )
 from PyQt5.QtSql import QSqlDatabase,QSqlQuery,QSqlQueryModel
 from PyQt5.QtGui import QPixmap
-
+from PyQt5.QtCore import pyqtSignal,QThread
+from threading import Thread
 from UI.UI_MainWindow import Ui_mainWindow
 from UI.UI_ComicBook import Ui_comicBook
 from UI.UI_DBSourceWindow import Ui_DBSourceView
@@ -37,6 +39,29 @@ class About(QDialog):
         ui = Ui_About()
         ui.setupUi(self)
 
+#用于阅读载入PDF的工作线程
+class ThreadLoadPDF(QThread):
+    # 定义Tabwidget可以加载PDF阅读页面的信号
+    signal_PdfReady = pyqtSignal(QWidget,str)
+
+    def __init__(self,):
+        super().__init__()
+        print("thread----")
+        self.stream = None
+        self.title = None
+
+    def setStream(self,stream):
+        self.stream = stream
+
+    def setTitle(self,title):
+        self.title = title
+
+    def run(self):
+        print("thread run")
+        tab = WidgetPDFStream(self.stream,self.title)
+        self.signal_PdfReady.emit(tab,self.title)
+
+
 class MainWindow(QMainWindow):
 
     def __init__(self):
@@ -66,17 +91,8 @@ class MainWindow(QMainWindow):
         self.DBTreeMain.setupUi(self.DBView)
         self.DBView.setObjectName("DBView")
         self.DBTreeMain.tree_LeftView.setHeaderHidden(True)
-
-
         self.isOpenDBView = False
-        self.tableName = ""
-        self.DBViewCurrentPage = 0
-        self.DBViewEachPageCount = 20
-        self.DBViewTotalRecord = 0
-        self.queryModel = QSqlQueryModel()
-
-
-
+        self.tableName = ""#当前选中的数据表名
         self.DBTreeMain.tree_LeftView.clicked.connect(self.on_DBTreeMain_Clicked)
 
         #初始化数据库
@@ -88,7 +104,8 @@ class MainWindow(QMainWindow):
         self.ui.action_DB.triggered.connect(self.setDBView)
         self.ui.action_About.triggered.connect(self.setAboutDial)
 
-
+        #self.workThreadOpenPDF = ThreadLoadPDF()
+        #self.workThreadOpenPDF.signal_PdfReady.connect(self.on_ThreadLoadPDF_AddTabWidget)
 
     #槽函数，相应工具栏动作按钮
     def setComicView(self):
@@ -100,6 +117,7 @@ class MainWindow(QMainWindow):
             self.isOpenComicView = True
             print(self.comicView.objectName())
 
+    #槽函数，数据库浏览页
     def setDBView(self):
         if self.isOpenDBView == True:
             self.cenTab.setCurrentWidget(self.DBView)
@@ -144,6 +162,43 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self,"错误","数据库驱动错误")
             print(e)
 
+    #获取PDF文件二进制流
+    def getPDFStream(self,tName,MD5):
+        try:
+            query = QSqlQuery(self.DB)
+            tFileName = tName + "File"
+            sqQuery = "select FileBinary from %s where MD5=?" % tFileName
+            #print(sqQuery)
+            query.prepare(sqQuery)
+            query.bindValue(0,MD5)
+            query.exec()
+            query.last()
+            return query.value("fileBinary")
+        except:
+            return None
+
+
+    #槽函数，打开标签页，阅读PDF
+    def openTab2ReadPDF(self,MD5,title):
+        #print("这里是主窗口", self.tableName, MD5, title)
+        stream = self.getPDFStream(self.tableName, MD5)
+        #self.workThreadOpenPDF.setStream(stream)
+        #self.workThreadOpenPDF.setTitle(title)
+        #self.workThreadOpenPDF.start()
+        tab = WidgetPDFStream(stream, title)
+        self.cenTab.addTab(tab, title[0:16])
+
+    #槽函数，用于响应载入阅读PDF的工作线程信号
+    def on_ThreadLoadPDF_AddTabWidget(self,tab,title):
+        print("yes")
+        print(tab)
+        self.cenTab.addTab(tab,"1111")
+
+    #槽函数，下载PDF
+    def downloadPDF(self,tName,MD5,title):
+        print("这里是主窗口", tName, MD5, title)
+        pass
+
     #工作区标签页关闭
     def on_cenTab_close(self,index):
         tabName = self.cenTab.currentWidget().objectName()
@@ -162,51 +217,28 @@ class MainWindow(QMainWindow):
             index = int(item)
             self.tableName = tableName[index]
             print(self.tableName)
-            self.DBViewCurrentPage = 0
-            self.DBViewEachPageCount = 20
+            #self.DBViewCurrentPage = 0
+            #self.DBViewEachPageCount = 20
             while self.DBTreeMain.layout_RightView.count():
                 child = self.DBTreeMain.layout_RightView.takeAt(0)
                 child.widget().deleteLater()
             if index == 0:#期刊
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentQK(self.DB))
+                DocumentItem = DBDocumentQK(self.DB)
             elif index == 1:#图书
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentTS(self.DB))
+                DocumentItem = DBDocumentTS(self.DB)
             elif index == 2:#学位论文
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentXWLW(self.DB))
+                DocumentItem =DBDocumentXWLW(self.DB)
             elif index == 3:#会议论文
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentHYLW(self.DB))
+                DocumentItem =DBDocumentHYLW(self.DB)
             elif index == 4:#戏曲
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentXQ(self.DB))
+                DocumentItem = DBDocumentXQ(self.DB)
             elif index == 5:#歌册
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentQP(self.DB))
+                DocumentItem =(DBDocumentQP(self.DB))
             elif index == 6:#南音
-                self.DBTreeMain.layout_RightView.addWidget(DBDocumentNY(self.DB))
-
-    #数据库浏览-下一页
-    def DBViewNextPage(self):
-        print("next page")
-
-    #数据库浏览-上一页
-    def DBViewPrePage(self):
-        print("上一页")
-
-    #数据库浏览-跳转页面
-    def DBViewGoto(self):
-        print("跳转页")
-
-    #数据库浏览-阅读PDF
-    def DBViewReadPDF(self):
-        print("阅读PDF")
-
-    #数据库浏览-下载PDF
-    def DBViewDownload(self):
-        print("下载PDF")
-
-    #数据库浏览-获取每页展示的记录数量
-    def DBViewGetEachPageCount(self):
-        text = self.DBSourceView.comBox_EachRecordOfPage.currentText()
-        print(text)
-
+                DocumentItem =(DBDocumentNY(self.DB))
+            self.DBTreeMain.layout_RightView.addWidget(DocumentItem)
+            DocumentItem.signal_ReadPdf.connect(self.openTab2ReadPDF)
+            DocumentItem.signal_Download.connect(self.downloadPDF)
 
 
 if __name__ == '__main__':
