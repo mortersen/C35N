@@ -1,8 +1,9 @@
-import sys
+import sys,os
+import fitz
 from PDFWidget import WidgetPDF,WidgetPDFStream
 from PyQt5.QtWidgets import (
     QApplication,QMainWindow,QTabWidget,QWidget,QMessageBox,QHBoxLayout,QPushButton,
-    QLabel,QDialog,QDataWidgetMapper,QTableView
+    QLabel,QDialog,QDataWidgetMapper,QTableView,QFileDialog
 )
 from PyQt5.QtSql import QSqlDatabase,QSqlQuery,QSqlQueryModel
 from PyQt5.QtGui import QPixmap
@@ -39,30 +40,12 @@ class About(QDialog):
         ui = Ui_About()
         ui.setupUi(self)
 
-#用于阅读载入PDF的工作线程
-class ThreadLoadPDF(QThread):
-    # 定义Tabwidget可以加载PDF阅读页面的信号
-    signal_PdfReady = pyqtSignal(QWidget,str)
-
-    def __init__(self,):
-        super().__init__()
-        print("thread----")
-        self.stream = None
-        self.title = None
-
-    def setStream(self,stream):
-        self.stream = stream
-
-    def setTitle(self,title):
-        self.title = title
-
-    def run(self):
-        print("thread run")
-        tab = WidgetPDFStream(self.stream,self.title)
-        self.signal_PdfReady.emit(tab,self.title)
 
 
 class MainWindow(QMainWindow):
+
+    #自定义信号
+    Signal_DownloadOver = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -104,8 +87,7 @@ class MainWindow(QMainWindow):
         self.ui.action_DB.triggered.connect(self.setDBView)
         self.ui.action_About.triggered.connect(self.setAboutDial)
 
-        #self.workThreadOpenPDF = ThreadLoadPDF()
-        #self.workThreadOpenPDF.signal_PdfReady.connect(self.on_ThreadLoadPDF_AddTabWidget)
+        self.Signal_DownloadOver.connect(self.on_DownloadOver)
 
     #槽函数，相应工具栏动作按钮
     def setComicView(self):
@@ -180,24 +162,29 @@ class MainWindow(QMainWindow):
 
     #槽函数，打开标签页，阅读PDF
     def openTab2ReadPDF(self,MD5,title):
-        #print("这里是主窗口", self.tableName, MD5, title)
         stream = self.getPDFStream(self.tableName, MD5)
-        #self.workThreadOpenPDF.setStream(stream)
-        #self.workThreadOpenPDF.setTitle(title)
-        #self.workThreadOpenPDF.start()
         tab = WidgetPDFStream(stream, title)
         self.cenTab.addTab(tab, title[0:16])
-
-    #槽函数，用于响应载入阅读PDF的工作线程信号
-    def on_ThreadLoadPDF_AddTabWidget(self,tab,title):
-        print("yes")
-        print(tab)
-        self.cenTab.addTab(tab,"1111")
 
     #槽函数，下载PDF
     def downloadPDF(self,tName,MD5,title):
         print("这里是主窗口", tName, MD5, title)
-        pass
+        newFileName, ok = QFileDialog.getSaveFileName(self, "文件下载到", os.getcwd()+"\\"+title+".pdf", "*.pdf")
+        if ok:
+            pass
+            def func():
+                stream = bytes(self.getPDFStream(self.tableName, MD5))
+                docDoc = fitz.open(None, stream, 'PDF')
+                docDoc.save(newFileName)
+            saveThread = Thread(target=func)
+            saveThread.start()
+            self.Signal_DownloadOver.emit(newFileName)
+        else:
+            return
+
+    #槽函数响应下载完成
+    def on_DownloadOver(self,str):
+        QMessageBox.information(self, "提示", str + "文件下载成功！")
 
     #工作区标签页关闭
     def on_cenTab_close(self,index):

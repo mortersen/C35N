@@ -24,6 +24,9 @@ class DBDocumentBase(QWidget):
         self.eachPageRecord = 20
         self.totalRecord = 0
         self.totalPages = 0
+        # 非查询状态标 False时执行条件查询语句，默认是非查询载入
+        self.isAll = True
+        self.baseUI.lab_QueryTotal.setText("")
         self.DB = DB
         self.DB.open()
         self.query = QSqlQuery(self.DB)
@@ -45,11 +48,14 @@ class DBDocumentBase(QWidget):
         #self.baseUI.tableView.horizontalHeader().setStretchLastSection(True)
         #self.baseUI.tableView.resizeColumnsToContents()
 
-
+        #控件信号
         self.baseUI.comBox_EachRecordOfPage.currentIndexChanged.connect(self.get_EachRecordOfPage)
         self.baseUI.btn_PrePage.released.connect(self.on_PrePage)
         self.baseUI.btn_NextPage.released.connect(self.on_NextPage)
         self.baseUI.btn_Goto.released.connect(self.on_Goto)
+        self.baseUI.btn_Reflash.released.connect(self.on_BtnReflash)
+        self.baseUI.btn_Query.released.connect(self.on_BtnQuery)
+
         #发送自定义信号
         self.baseUI.btn_ReadPDF.released.connect(self.on_ReadPDF_SignalEmit)
         self.baseUI.btn_Download.released.connect(self.on_Download_SignalEmit)
@@ -85,6 +91,25 @@ class DBDocumentBase(QWidget):
 
     def on_Goto(self):
         print(self.objectName())
+
+    #重新载入
+    def on_BtnReflash(self):
+        if self.isAll == False:
+            self.isAll = True
+            self.clearQueryCondition()
+        self.recordQuery(0)
+        self.currentPage = 1
+        self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
+
+    def on_BtnQuery(self):
+        pass
+
+    #清除有关查询的控件显示内容
+    def clearQueryCondition(self):
+        self.baseUI.comboBox_SearchBy.setCurrentIndex(0)
+        self.baseUI.lineEdit_Condition.setText("")
+        self.baseUI.lab_QueryTotal.setText("")
+
     #选择模型-行切换是更新组件界面
     def do_currentRowChanged(self,current,previous):
         #print(current.row())
@@ -113,7 +138,6 @@ class DBDocumentBase(QWidget):
         #print(Title)
         self.signal_ReadPdf.emit(MD5, Title)
 
-
 #封装戏曲
 class DBDocumentXQ(DBDocumentBase):
     def __init__(self,DB):
@@ -129,7 +153,7 @@ class DBDocumentXQ(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
-
+        #初次载入
         self.recordQuery(0)
 
 
@@ -216,7 +240,7 @@ class DBDocumentXQ(DBDocumentBase):
         if text == "":
             return
         if not text.isdigit() :
-            QMessageBox.information(self,"提示","请输入数字!")
+            QMessageBox.information(self,"提示","请输入跳转页码!")
             return
         pageIndex = int(text)
         if pageIndex < 1 or pageIndex > self.totalPages:
@@ -226,6 +250,31 @@ class DBDocumentXQ(DBDocumentBase):
         self.recordQuery(index)
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
+
+    #条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        #print(fieldIndex,condition)
+        if fieldIndex == 0:#按标题
+            pass
+            field = "Title"
+        elif fieldIndex == 1:#按作者
+            pass
+            field = "Author"
+        elif fieldIndex == 2:#按关键字
+            QMessageBox.information(self, "提示", "无该项查询内容，请重新选择查询内容！")
+            return
+        elif fieldIndex == 3:#按主要内容
+            field ="Summary"
+        if self.isAll == True:#载入后首次查询
+            self.isAll = False
+        condition = "\'%"+condition + "%\'"
+        sen = "select Title, Author, Origin, Pages, Summary,md5 from TraditionalOpera where %s like %s" % (field,condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
 
 
 #封装期刊
@@ -335,6 +384,44 @@ class DBDocumentQK(DBDocumentBase):
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
 
+    # 条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        # print(fieldIndex,condition)
+        if fieldIndex == 0:  # 按标题
+            pass
+            field = "Title"
+        elif fieldIndex == 1:  # 按作者
+            pass
+            field = "Author"
+        elif fieldIndex == 2:  # 按关键字
+            field = 'Keyword'
+        elif fieldIndex == 3:  # 按主要内容
+            field = "Abstract"
+        if self.isAll == True:  # 载入后首次查询
+            self.isAll = False
+        condition = "\'%" + condition + "%\'"
+        sen = "select Title, Author,Journal,Issue,Year,Pages,Volume, Keyword, Abstract, MD5 from Periodical where %s like %s" % (
+            field, condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("Periodical",MD5,Title)
+
 
 #封装图书
 class DBDocumentTS(DBDocumentBase):
@@ -442,6 +529,42 @@ class DBDocumentTS(DBDocumentBase):
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
 
+    # 条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        # print(fieldIndex,condition)
+        if fieldIndex == 0:  # 按标题
+            field = "Title"
+        elif fieldIndex == 1:  # 按作者
+            field = "Author"
+        elif fieldIndex == 2:  # 按关键字
+            field = 'Keywords'
+        elif fieldIndex == 3:  # 按主要内容
+            field = "Abstract"
+        if self.isAll == True:  # 载入后首次查询
+            self.isAll = False
+        condition = "\'%" + condition + "%\'"
+        sen = "select Title, SecondaryTitle, Author, Pages, Year, Publisher, Keywords, Abstract, MD5 from Book where %s like %s" % (
+            field, condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("Book",MD5,Title)
+
 #封装南音
 class DBDocumentNY(DBDocumentBase):
     def __init__(self,DB):
@@ -538,6 +661,44 @@ class DBDocumentNY(DBDocumentBase):
         self.recordQuery(index)
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
+
+    # 条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        # print(fieldIndex,condition)
+        if fieldIndex == 0:  # 按标题
+            field = "Title"
+        elif fieldIndex == 1:  # 按作者
+            field = "Author"
+        elif fieldIndex == 2:  # 按关键字
+            QMessageBox.information(self, "提示", "无该项查询内容，请重新选择查询内容！")
+            return
+        elif fieldIndex == 3:  # 按主要内容
+            QMessageBox.information(self, "提示", "无该项查询内容，请重新选择查询内容！")
+            return
+        if self.isAll == True:  # 载入后首次查询
+            self.isAll = False
+        condition = "\'%" + condition + "%\'"
+        sen = "select Title, Author, Pages, Origin, MD5 from SouthSoundOpera where %s like %s" % (
+            field, condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("SouthSoundOpera",MD5,Title)
 
 #封装曲谱
 class DBDocumentQP(DBDocumentBase):
@@ -637,6 +798,43 @@ class DBDocumentQP(DBDocumentBase):
         self.recordQuery(index)
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
+
+    # 条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        # print(fieldIndex,condition)
+        if fieldIndex == 0:  # 按标题
+            field = "Title"
+        elif fieldIndex == 1:  # 按作者
+            field = "Author"
+        elif fieldIndex == 2:  # 按关键字
+            QMessageBox.information(self, "提示", "无该项查询内容，请重新选择查询内容！")
+            return
+        elif fieldIndex == 3:  # 按主要内容
+            field = 'Summary'
+        if self.isAll == True:  # 载入后首次查询
+            self.isAll = False
+        condition = "\'%" + condition + "%\'"
+        sen = "select Title, Author, Pages, Origin, Summary, MD5 from SongBook where %s like %s" % (
+            field, condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("SongBook",MD5,Title)
 
 #封装会议论文
 class DBDocumentHYLW(DBDocumentBase):
@@ -756,6 +954,43 @@ class DBDocumentHYLW(DBDocumentBase):
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
 
+    # 条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        # print(fieldIndex,condition)
+        if fieldIndex == 0:  # 按标题
+            pass
+            field = "Title"
+        elif fieldIndex == 1:  # 按作者
+            pass
+            field = "Author"
+        elif fieldIndex == 2:  # 按关键字
+            field = 'Keywords'
+        elif fieldIndex == 3:  # 按主要内容
+            field = "Abstract"
+        if self.isAll == True:  # 载入后首次查询
+            self.isAll = False
+        condition = "\'%" + condition + "%\'"
+        sen = "select * from ConferencePaper where %s like %s" % (field, condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("ConferencePaper",MD5,Title)
+
 #封装学位论文
 class DBDocumentXWLW(DBDocumentBase):
     def __init__(self,DB):
@@ -860,6 +1095,43 @@ class DBDocumentXWLW(DBDocumentBase):
         self.recordQuery(index)
         self.currentPage = pageIndex
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
+
+    # 条件查询
+    def on_BtnQuery(self):
+        condition = self.baseUI.lineEdit_Condition.text().strip()
+        if condition == "":
+            return
+        fieldIndex = self.baseUI.comboBox_SearchBy.currentIndex()
+        # print(fieldIndex,condition)
+        if fieldIndex == 0:  # 按标题
+            pass
+            field = "Title"
+        elif fieldIndex == 1:  # 按作者
+            pass
+            field = "Author"
+        elif fieldIndex == 2:  # 按关键字
+            field = 'Keyword'
+        elif fieldIndex == 3:  # 按主要内容
+            field = "Abstract"
+        if self.isAll == True:  # 载入后首次查询
+            self.isAll = False
+        condition = "\'%" + condition + "%\'"
+        sen = "select Title, Author,TertiaryAuthor,Publisher,DegreeLevel,Year, Keyword, Abstract, MD5 from Dissertation where %s like %s" % (field, condition)
+        self.queryModel.setQuery(sen)
+        self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
+
+    #处理下载按钮按下，发射下载信号到主窗口，携带三个参数表名、MD5、标题
+    def on_Download_SignalEmit(self):
+        index =  self.baseUI.tableView.currentIndex().row()
+        if index < 0:
+            return
+        print("下载按钮信号----->"+str(index))
+        #获取选中记录
+        curRec = self.queryModel.record(index)
+        MD5 = curRec.value("MD5")
+        Title = curRec.value("Title")
+        print(Title)
+        self.signal_Download.emit("Dissertation",MD5,Title)
 
 if __name__ == "__main__":
     import sys

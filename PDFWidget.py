@@ -1,6 +1,7 @@
 import sys
+from threading import Thread
 from PyQt5.QtWidgets import (QWidget,QApplication,QListView,QListWidget,QLabel,
-                                QVBoxLayout,QListWidgetItem,QFileDialog
+                                QVBoxLayout,QListWidgetItem,QFileDialog,QMessageBox
                              )
 from PyQt5.QtGui import QImage,QPixmap
 from PyQt5.QtCore import QSize,Qt,pyqtSignal
@@ -56,8 +57,6 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
         self.LISTITEM_SIZE = QSize(160, 250)
 
         self.iniUi()
-        self.init_event_plot()
-        #self.open_doc()
 
     # 初始化listWidget
     def iniUi(self):
@@ -82,6 +81,7 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
         self.actionSaveAs.released.connect(self.onclicked_actionSaveAs)
         # 打印pdf文档
         self.actionPrint.released.connect(self.onclicked_actionPrint)
+
 
     # 打开文档处理
     def open_doc(self):
@@ -223,11 +223,18 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
         )
 
 class WidgetPDFStream(WidgetPDF):
+    signal_SaveOver = pyqtSignal(str)
+
     def __init__(self,stream,title):
         super().__init__()
         #print(type(stream))
-        self.stream = bytearray(stream)
+        self.stream = bytes(stream)
         self.docTitle = title
+
+        self.init_event_plot()
+
+        self.signal_SaveOver.connect(self.onSignalSaveOver)
+
         self.open_docByStream()
 
     def open_docByStream(self):
@@ -247,7 +254,50 @@ class WidgetPDFStream(WidgetPDF):
             self.show_current_page()
         except:
             pass
+    #打印
+    def onclicked_actionPrint(self):
+        #if not self.bOpened :
+        #    return
+        #if self.bModified:
+        #    QMessageBox.information(self, "Information", "已修改，请先保存", QMessageBox.Ok)
+        #    return
+        file = open("./temp.pdf",'wb')
+        file.write(self.stream)
+        file.close()
 
+        print("stream print")
+        win32api.ShellExecute(
+            0,
+            "print",
+            "./temp.pdf",
+            #
+            # If this is None, the default printer will
+            # be used anyway.
+            #
+            '/d:"%s"' % win32print.GetDefaultPrinter(),
+            ".",
+            0
+        )
+
+   # 另存为
+
+    def onclicked_actionSaveAs(self):
+
+        newfileName, ok = QFileDialog.getSaveFileName(self, "文件另存为", os.getcwd()+"\\"+self.docTitle+".pdf", "*.pdf")
+        if ok:
+            #self.docDoc.save(newfileName)
+            def func():
+                self.docDoc.save(newfileName)
+                self.signal_SaveOver.emit(newfileName)
+            saveThread = Thread(target=func)
+            saveThread.start()
+
+        else:
+            return
+
+    #槽函数，提示另存成功
+    def onSignalSaveOver(self,name):
+        QMessageBox.information(self, "提示", name + "文件另存为成功！")
 
 if __name__ == '__main__':
     mainAPP = QApplication(sys.argv)
