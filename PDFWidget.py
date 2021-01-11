@@ -1,4 +1,4 @@
-import sys
+import sys,tempfile
 from threading import Thread
 from PyQt5.QtWidgets import (QWidget,QApplication,QListView,QListWidget,QLabel,
                                 QVBoxLayout,QListWidgetItem,QFileDialog,QMessageBox
@@ -256,28 +256,18 @@ class WidgetPDFStream(WidgetPDF):
             pass
     #打印
     def onclicked_actionPrint(self):
-        #if not self.bOpened :
-        #    return
-        #if self.bModified:
-        #    QMessageBox.information(self, "Information", "已修改，请先保存", QMessageBox.Ok)
-        #    return
-        file = open("./temp.pdf",'wb')
-        file.write(self.stream)
-        file.close()
-
-        print("stream print")
-        win32api.ShellExecute(
-            0,
-            "print",
-            "./temp.pdf",
-            #
-            # If this is None, the default printer will
-            # be used anyway.
-            #
-            '/d:"%s"' % win32print.GetDefaultPrinter(),
-            ".",
-            0
-        )
+        if self.bOpened == True:
+            newFileName = tempfile.mktemp(".pdf")
+            self.docDoc.save(newFileName)
+            print("stream print")
+            win32api.ShellExecute(
+                0,
+                "print",
+                newFileName,
+                '"%s"' % win32print.GetDefaultPrinter(),
+                ".",
+                0
+            )
 
    # 另存为
 

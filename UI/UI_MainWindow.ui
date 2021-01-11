@@ -41,8 +41,6 @@
    </attribute>
    <addaction name="action_DB"/>
    <addaction name="action_comicBook"/>
-   <addaction name="action_SearchContext"/>
-   <addaction name="action_Setting"/>
    <addaction name="separator"/>
    <addaction name="action_About"/>
   </widget>
@@ -56,30 +54,6 @@
    </property>
    <property name="toolTip">
     <string>打开数据库视窗</string>
-   </property>
-  </action>
-  <action name="action_SearchContext">
-   <property name="icon">
-    <iconset resource="../RES/img.qrc">
-     <normaloff>:/Icon/query.png</normaloff>:/Icon/query.png</iconset>
-   </property>
-   <property name="text">
-    <string>SearchContext</string>
-   </property>
-   <property name="toolTip">
-    <string>数据库检索</string>
-   </property>
-  </action>
-  <action name="action_Setting">
-   <property name="icon">
-    <iconset resource="../RES/img.qrc">
-     <normaloff>:/Icon/setup.png</normaloff>:/Icon/setup.png</iconset>
-   </property>
-   <property name="text">
-    <string>Setting</string>
-   </property>
-   <property name="toolTip">
-    <string>系统设置</string>
    </property>
   </action>
   <action name="action_comicBook">

@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
-    <height>153</height>
+    <width>410</width>
+    <height>163</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>345</width>
+    <height>163</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>About ...</string>
@@ -23,8 +29,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>120</y>
+     <x>310</x>
+     <y>130</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -38,8 +44,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>341</width>
-     <height>101</height>
+     <width>380</width>
+     <height>112</height>
     </rect>
    </property>
    <property name="title">
@@ -50,12 +56,12 @@
      <rect>
       <x>120</x>
       <y>50</y>
-      <width>211</width>
+      <width>221</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>泉州师范学院</string>
+     <string>@CopyRight 2020 LJ.QZ.FJ.China</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -63,8 +69,8 @@
      <rect>
       <x>10</x>
       <y>9</y>
-      <width>81</width>
-      <height>81</height>
+      <width>91</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
@@ -83,7 +89,7 @@
       <x>120</x>
       <y>20</y>
       <width>211</width>
-      <height>21</height>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
