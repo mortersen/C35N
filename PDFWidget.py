@@ -1,5 +1,6 @@
 import sys,tempfile
 from threading import Thread
+from queue import Queue
 from PyQt5.QtWidgets import (QWidget,QApplication,QListView,QListWidget,QLabel,
                                 QVBoxLayout,QListWidgetItem,QFileDialog,QMessageBox
                              )
@@ -12,6 +13,18 @@ import fitz
 import os
 import win32api
 import win32print
+
+#QImage 辅助类
+class PdfImage():
+    def __init__(self,index,image):
+        self.index = index
+        self.image = image
+
+    def getIndex(self):
+        return self.index
+
+    def getImage(self):
+        return self.image
 
 #主显示界面辅助类
 class ShowImageWidget(QLabel):
@@ -41,6 +54,7 @@ class ShowImageWidget(QLabel):
 class WidgetPDF(QWidget,Ui_widgetReadPDF):
 
 
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -57,6 +71,7 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
         self.LISTITEM_SIZE = QSize(160, 250)
 
         self.iniUi()
+
 
     # 初始化listWidget
     def iniUi(self):
@@ -224,18 +239,87 @@ class WidgetPDF(QWidget,Ui_widgetReadPDF):
 
 class WidgetPDFStream(WidgetPDF):
     signal_SaveOver = pyqtSignal(str)
+    signal_OpenDoc = pyqtSignal()
+    signal_HaveImage = pyqtSignal()
 
     def __init__(self,stream,title):
         super().__init__()
         #print(type(stream))
         self.stream = bytes(stream)
         self.docTitle = title
-
+        self.imageQueue = Queue()
         self.init_event_plot()
 
         self.signal_SaveOver.connect(self.onSignalSaveOver)
+        self.signal_OpenDoc.connect(self.onSignalOpenDocInitUI)
+        self.signal_HaveImage.connect(self.onSignalHaveImageDisplayTree)
 
-        self.open_docByStream()
+        self.openPdfByStreamThread()
+        #self.open_docByStream()
+    #以线程方式代开文档
+    def openPdfByStreamThread(self):
+        try:
+            def func():
+                self.docDoc = fitz.open(None, self.stream, 'PDF')
+                self.bOpened = True
+                #成功打开后发射
+                self.signal_OpenDoc.emit()
+            openThread = Thread(target=func)
+            openThread.start()
+        except:
+            pass
+
+    #以线程方式加载左侧树，并生成QImage队列
+    def onSignalOpenDocInitUI(self):
+        self.nPages = self.docDoc.pageCount#总页数
+        self.listWidget.clear()  # 刷新左侧树
+        def func1():
+            zoom = int(30)
+            rotate = int(0)
+            trans = fitz.Matrix(zoom / 100.0, zoom / 100.0).preRotate(rotate)
+
+            for i in range(0,self.nPages):
+                page = self.docDoc[i]  # 当前页
+                pix = page.getPixmap(matrix=trans, alpha=False)
+                fmt = QImage.Format_RGBA8888 if pix.alpha else QImage.Format_RGB888
+                qtimg = QImage(pix.samples, pix.width, pix.height, pix.stride, fmt)
+                self.imageQueue.put(PdfImage(i,qtimg))
+                #是否单个发射？
+                self.signal_HaveImage.emit()
+                #time.sleep(0.001)
+        imageThread = Thread(target=func1)
+        imageThread.start()
+
+    def onSignalHaveImageDisplayTree(self):
+        while self.imageQueue.qsize() != 0 :
+            pdfImage = self.imageQueue.get()
+            qtimg = pdfImage.getImage()
+            current = pdfImage.getIndex()
+
+            widget = QWidget(self)
+            vboxLayout = QVBoxLayout()
+            widget.setLayout(vboxLayout)
+            listItem = QListWidgetItem(self.listWidget)  # 列表控件项
+            listItem.setSizeHint(self.LISTITEM_SIZE)
+            labelimg = QLabel(widget)
+            labelimg.setPixmap(QPixmap.fromImage(qtimg).scaled(self.IMAGE_SIZE))  # 显示在一个QLabel上
+            labelimg.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+            labeltxt = QLabel(widget)  # 页码序号
+            labeltxt.setText("%d" % int(current + 1))
+            labeltxt.setFixedHeight(30)
+            labeltxt.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+            labeltxt.setWordWrap(True)
+            vboxLayout.addWidget(labelimg)  # 图片和页码加入vboxLayout
+            vboxLayout.addWidget(labeltxt)
+            self.listWidget.addItem(listItem)
+            widget.setFixedHeight(self.LISTITEM_SIZE.height())
+
+            self.listWidget.setItemWidget(listItem, widget)  # 显示到listWidget中
+
+        self.nCurr = 0
+        self.show_current_page()
+
+
 
     def open_docByStream(self):
         try:

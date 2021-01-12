@@ -55,6 +55,7 @@ class DBDocumentBase(QWidget):
         self.baseUI.btn_Goto.released.connect(self.on_Goto)
         self.baseUI.btn_Reflash.released.connect(self.on_BtnReflash)
         self.baseUI.btn_Query.released.connect(self.on_BtnQuery)
+        self.baseUI.lineEdit_Condition.returnPressed.connect(self.on_BtnQuery)
 
         #发送自定义信号
         self.baseUI.btn_ReadPDF.released.connect(self.on_ReadPDF_SignalEmit)

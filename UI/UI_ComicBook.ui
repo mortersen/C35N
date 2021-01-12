@@ -16,6 +16,12 @@
   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,20,1">
    <item>
     <widget class="QPushButton" name="btn_PagePre">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>32</width>
@@ -46,7 +52,7 @@
       <widget class="QLabel" name="lab_PicShow">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
+         <horstretch>9</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -59,6 +65,12 @@
    </item>
    <item>
     <widget class="QPushButton" name="btn_PageNext">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>32</width>

@@ -51,6 +51,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui =  Ui_mainWindow()
         self.ui.setupUi(self)
+        #窗体显示最小化和关闭按钮
+        #self.setWindowFlags(Qt.WindowCloseButtonHint|Qt.WindowMinimizeButtonHint)
 
         #设置中心控制区的QTabWidget
         self.cenTab = QTabWidget()
@@ -89,13 +91,20 @@ class MainWindow(QMainWindow):
 
         self.Signal_DownloadOver.connect(self.on_DownloadOver)
 
+        self.comic.btn_PagePre.setVisible(False)
+        self.comic.btn_PageNext.setVisible(False)
+        self.ui.action_comicBook.triggered.emit()
+
+
+
+
     #槽函数，相应工具栏动作按钮
     def setComicView(self):
         if self.isOpenComicView == True :
             self.cenTab.setCurrentWidget(self.comicView)
         else:
             #self.comic.lab_PicShow.setPixmap(QPixmap(picPath[self.currentPic]))
-            self.cenTab.addTab(self.comicView,"连环画故事《陈三五娘》")
+            self.cenTab.addTab(self.comicView,"简介-《陈三五娘》连环画")
             self.isOpenComicView = True
             print(self.comicView.objectName())
 
@@ -111,15 +120,16 @@ class MainWindow(QMainWindow):
     def setAboutDial(self):
         about = About()
         about.exec_()
+
     #连环画下一页
     def on_comic_btnPageNext(self):
+
         temp = self.currentPic + 1
         if temp > 15:
             self.currentPic = 0
         else:
             self.currentPic = temp
-        pic = QPixmap(picPath[self.currentPic]).scaled(self.comic.lab_PicShow.width(),
-                                                       self.comic.lab_PicShow.height())
+        pic = QPixmap(picPath[self.currentPic]).scaled(self.comic.lab_PicShow.width(),self.comic.lab_PicShow.height())
         self.comic.lab_PicShow.setPixmap(pic)
     #连环画上一页
     def on_comic_btnPagePre(self):
@@ -131,6 +141,18 @@ class MainWindow(QMainWindow):
         pic = QPixmap(picPath[self.currentPic]).scaled(self.comic.lab_PicShow.width(),
                                                        self.comic.lab_PicShow.height())
         self.comic.lab_PicShow.setPixmap(pic)
+
+    def mousePressEvent(self,event):
+        if event.buttons() == Qt.LeftButton:
+            if self.cenTab.currentWidget().objectName() == "COMICVIEW":
+                self.comic.btn_PageNext.released.emit()
+            else:
+                return
+        if event.buttons() == Qt.RightButton:
+            if self.cenTab.currentWidget().objectName() == "COMICVIEW":
+                self.comic.btn_PagePre.released.emit()
+            else:
+                return
 
     #链接数据库
     def createDB(self):
@@ -165,6 +187,7 @@ class MainWindow(QMainWindow):
         stream = self.getPDFStream(self.tableName, MD5)
         tab = WidgetPDFStream(stream, title)
         self.cenTab.addTab(tab, title[0:16])
+
 
     #槽函数，下载PDF
     def downloadPDF(self,tName,MD5,title):
