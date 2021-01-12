@@ -158,6 +158,7 @@ class DBDocumentXQ(DBDocumentBase):
 
 
         self.queryModel.setHeaderData(0,Qt.Horizontal,"戏曲名")
+        self.baseUI.tableView.setColumnWidth(0,400)
         self.queryModel.setHeaderData(1,Qt.Horizontal,"作者")
         self.queryModel.setHeaderData(2,Qt.Horizontal,"收录来源")
         self.queryModel.setHeaderData(3,Qt.Horizontal,"页数")
@@ -296,6 +297,7 @@ class DBDocumentQK(DBDocumentBase):
         self.recordQuery(0)
 
         self.queryModel.setHeaderData(0, Qt.Horizontal, "标题")
+        self.baseUI.tableView.setColumnWidth(0, 400)
         self.queryModel.setHeaderData(1, Qt.Horizontal, "作者")
         self.queryModel.setHeaderData(2, Qt.Horizontal, "期刊名")
         self.queryModel.setHeaderData(3, Qt.Horizontal, "期数号")
@@ -442,6 +444,7 @@ class DBDocumentTS(DBDocumentBase):
         self.recordQuery(0)
 
         self.queryModel.setHeaderData(0, Qt.Horizontal, "书名")
+        self.baseUI.tableView.setColumnWidth(0, 300)
         self.queryModel.setHeaderData(1, Qt.Horizontal, "丛书名")
         self.queryModel.setHeaderData(2, Qt.Horizontal, "作者")
         self.queryModel.setHeaderData(3, Qt.Horizontal, "页数")
@@ -584,6 +587,7 @@ class DBDocumentNY(DBDocumentBase):
         self.recordQuery(0)
 
         self.queryModel.setHeaderData(0, Qt.Horizontal, "曲谱名")
+        self.baseUI.tableView.setColumnWidth(0, 200)
         self.queryModel.setHeaderData(1, Qt.Horizontal, "作者")
         self.queryModel.setHeaderData(2, Qt.Horizontal, "页码")
         self.queryModel.setHeaderData(3, Qt.Horizontal, "资源来源")
@@ -719,6 +723,7 @@ class DBDocumentQP(DBDocumentBase):
         self.recordQuery(0)
 
         self.queryModel.setHeaderData(0, Qt.Horizontal, "曲谱名")
+        self.baseUI.tableView.setColumnWidth(0, 250)
         self.queryModel.setHeaderData(1, Qt.Horizontal, "作者")
         self.queryModel.setHeaderData(2, Qt.Horizontal, "页码")
         self.queryModel.setHeaderData(3, Qt.Horizontal, "资源来源")
@@ -855,6 +860,7 @@ class DBDocumentHYLW(DBDocumentBase):
         self.recordQuery(0)
 
         self.queryModel.setHeaderData(3, Qt.Horizontal, "标题")
+        self.baseUI.tableView.setColumnWidth(3, 400)
         self.queryModel.setHeaderData(13, Qt.Horizontal, "论文集名")
         self.queryModel.setHeaderData(1, Qt.Horizontal, "作者")
         self.queryModel.setHeaderData(2, Qt.Horizontal, "发表年份")
@@ -1010,6 +1016,7 @@ class DBDocumentXWLW(DBDocumentBase):
         self.recordQuery(0)
 
         self.queryModel.setHeaderData(0, Qt.Horizontal, "标题")
+        self.baseUI.tableView.setColumnWidth(0, 450)
         self.queryModel.setHeaderData(1, Qt.Horizontal, "作者")
         self.queryModel.setHeaderData(2, Qt.Horizontal, "指导老师")
         self.queryModel.setHeaderData(3, Qt.Horizontal, "作者单位")
