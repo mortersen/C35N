@@ -22,12 +22,10 @@ from UI.UI_DBTreeMain import Ui_DBTreeMain
 import img_rc
 
 #连环画图片资源路径
-picPath=[":/Icon/KJZ-C35N-1.png",":/Icon/KJZ-C35N-2.png",":/Icon/KJZ-C35N-3.png",
-                      ":/Icon/KJZ-C35N-4.png",":/Icon/KJZ-C35N-5.png",":/Icon/KJZ-C35N-6.png",
-                      ":/Icon/KJZ-C35N-7.png",":/Icon/KJZ-C35N-8.png",":/Icon/KJZ-C35N-9.png",
-                      ":/Icon/KJZ-C35N-10.png",":/Icon/KJZ-C35N-11.png",":/Icon/KJZ-C35N-12.png",
-                      ":/Icon/KJZ-C35N-13.png",":/Icon/KJZ-C35N-14.png",":/Icon/KJZ-C35N-15.png",
-                      ":/Icon/KJZ-C35N-16.png"]
+picPath=[":/Icon/la0.jpg",":/Icon/la1.jpg",":/Icon/la2.jpg",":/Icon/la3.jpg",":/Icon/la4.jpg",
+         ":/Icon/la5.jpg",":/Icon/la6.jpg",":/Icon/la7.jpg",":/Icon/la8.jpg",":/Icon/la9.jpg",
+         ":/Icon/la10.jpg",":/Icon/la11.jpg",":/Icon/la12.jpg",":/Icon/la13.jpg",":/Icon/la14.jpg",
+         ":/Icon/la15.jpg",":/Icon/la16.jpg"]
 
 #文献数据库表名
 tableName = ["Periodical","Book","Dissertation","ConferencePaper",
@@ -91,9 +89,10 @@ class MainWindow(QMainWindow):
 
         self.Signal_DownloadOver.connect(self.on_DownloadOver)
 
-        self.comic.btn_PagePre.setVisible(False)
-        self.comic.btn_PageNext.setVisible(False)
+        #self.comic.btn_PagePre.setVisible(False)
+        #self.comic.btn_PageNext.setVisible(False)
         self.ui.action_comicBook.triggered.emit()
+
 
 
 
@@ -115,7 +114,7 @@ class MainWindow(QMainWindow):
         else:
             self.cenTab.addTab(self.DBView,"数据库浏览")
             self.isOpenDBView = True
-            print(self.DBView.objectName())
+            #print(self.DBView.objectName())
 
     def setAboutDial(self):
         about = About()
@@ -125,7 +124,7 @@ class MainWindow(QMainWindow):
     def on_comic_btnPageNext(self):
 
         temp = self.currentPic + 1
-        if temp > 15:
+        if temp > 16:
             self.currentPic = 0
         else:
             self.currentPic = temp
@@ -135,7 +134,7 @@ class MainWindow(QMainWindow):
     def on_comic_btnPagePre(self):
         temp = self.currentPic - 1
         if temp < 0:
-            self.currentPic = 15
+            self.currentPic = 16
         else:
             self.currentPic = temp
         pic = QPixmap(picPath[self.currentPic]).scaled(self.comic.lab_PicShow.width(),
@@ -161,7 +160,7 @@ class MainWindow(QMainWindow):
         try:
             self.DB = QSqlDatabase.addDatabase("QSQLITE")
             self.DB.setDatabaseName("DB/C35N.db3")
-            print("Open DB success!")
+            #print("Open DB success!")
         except Exception as e:
             QMessageBox.critical(self,"错误","数据库驱动错误")
             print(e)
@@ -191,7 +190,7 @@ class MainWindow(QMainWindow):
 
     #槽函数，下载PDF
     def downloadPDF(self,tName,MD5,title):
-        print("这里是主窗口", tName, MD5, title)
+        #print("这里是主窗口", tName, MD5, title)
         newFileName, ok = QFileDialog.getSaveFileName(self, "文件下载到", os.getcwd()+"\\"+title+".pdf", "*.pdf")
         if ok:
             pass
@@ -226,7 +225,7 @@ class MainWindow(QMainWindow):
         else:
             index = int(item)
             self.tableName = tableName[index]
-            print(self.tableName)
+            #print(self.tableName)
             #self.DBViewCurrentPage = 0
             #self.DBViewEachPageCount = 20
             while self.DBTreeMain.layout_RightView.count():

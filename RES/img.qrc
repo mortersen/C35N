@@ -1,77 +1,34 @@
 <RCC>
   <qresource prefix="Icon">
-    <file>abottom.png</file>
-    <file>add.png</file>
-    <file>add1.png</file>
-    <file>add2.png</file>
     <file>address.png</file>
-    <file>aleft.png</file>
-    <file>aligncenter.png</file>
-    <file>alignjustify.png</file>
-    <file>alignleft.png</file>
-    <file>alignright.png</file>
-    <file>approve.png</file>
-    <file>aright.png</file>
     <file>arrowleft.png</file>
     <file>arrowright.png</file>
-    <file>atop.png</file>
-    <file>cancel.png</file>
-    <file>cellstyle.png</file>
-    <file>check.png</file>
-    <file>colorpicker.png</file>
     <file>convert.png</file>
-    <file>copy.png</file>
-    <file>custom.png</file>
-    <file>cut.png</file>
-    <file>del.png</file>
-    <file>del1.png</file>
-    <file>delete.png</file>
-    <file>document.png</file>
-    <file>e7cd7b899e510fb3a3306f9bd433c895d1430c94.png</file>
-    <file>edit.png</file>
-    <file>exit.png</file>
-    <file>font.png</file>
-    <file>forward.png</file>
-    <file>gallery.png</file>
     <file>goodFish.PNG</file>
     <file>home.png</file>
     <file>info.png</file>
-    <file>KJZ-C35N-1.png</file>
-    <file>KJZ-C35N-2.png</file>
-    <file>KJZ-C35N-3.png</file>
-    <file>KJZ-C35N-4.png</file>
-    <file>KJZ-C35N-5.png</file>
-    <file>KJZ-C35N-6.png</file>
-    <file>KJZ-C35N-7.png</file>
-    <file>KJZ-C35N-8.png</file>
-    <file>KJZ-C35N-9.png</file>
-    <file>KJZ-C35N-10.png</file>
-    <file>KJZ-C35N-11.png</file>
-    <file>KJZ-C35N-12.png</file>
-    <file>KJZ-C35N-13.png</file>
-    <file>KJZ-C35N-14.png</file>
-    <file>KJZ-C35N-15.png</file>
-    <file>KJZ-C35N-16.png</file>
-    <file>lock.png</file>
-    <file>new.png</file>
-    <file>openfolder.png</file>
-    <file>option.png</file>
-    <file>pict.png</file>
-    <file>pictdel.png</file>
-    <file>picture.png</file>
-    <file>picturetopgallery.png</file>
-    <file>preview.png</file>
     <file>print.png</file>
+    <file>la0.jpg</file>
+    <file>la1.jpg</file>
+    <file>la2.jpg</file>
+    <file>la3.jpg</file>
+    <file>la4.jpg</file>
+    <file>la5.jpg</file>
+    <file>la6.jpg</file>
+    <file>la7.jpg</file>
+    <file>la8.jpg</file>
+    <file>la9.jpg</file>
+    <file>la10.jpg</file>
+    <file>la11.jpg</file>
+    <file>la12.jpg</file>
+    <file>la13.jpg</file>
+    <file>la14.jpg</file>
+    <file>la15.jpg</file>
+    <file>la16.jpg</file>
     <file>query.png</file>
     <file>refresh.png</file>
-    <file>same.png</file>
-    <file>sameheight.png</file>
-    <file>samewidth.png</file>
     <file>save.png</file>
-    <file>select.png</file>
     <file>setup.png</file>
-    <file>sort.png</file>
-    <file>sort1.png</file>
     <file>zoom.png</file>
   </qresource>
 </RCC>

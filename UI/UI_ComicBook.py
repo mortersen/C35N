@@ -18,7 +18,7 @@ class Ui_comicBook(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(comicBook)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.btn_PagePre = QtWidgets.QPushButton(comicBook)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_PagePre.sizePolicy().hasHeightForWidth())
@@ -45,7 +45,7 @@ class Ui_comicBook(object):
         self.picLayout.addWidget(self.lab_PicShow)
         self.horizontalLayout_2.addLayout(self.picLayout)
         self.btn_PageNext = QtWidgets.QPushButton(comicBook)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_PageNext.sizePolicy().hasHeightForWidth())
@@ -60,7 +60,7 @@ class Ui_comicBook(object):
         self.btn_PageNext.setObjectName("btn_PageNext")
         self.horizontalLayout_2.addWidget(self.btn_PageNext)
         self.horizontalLayout_2.setStretch(0, 1)
-        self.horizontalLayout_2.setStretch(1, 20)
+        self.horizontalLayout_2.setStretch(1, 9)
         self.horizontalLayout_2.setStretch(2, 1)
 
         self.retranslateUi(comicBook)
@@ -69,6 +69,7 @@ class Ui_comicBook(object):
     def retranslateUi(self, comicBook):
         _translate = QtCore.QCoreApplication.translate
         comicBook.setWindowTitle(_translate("comicBook", "Form"))
+        self.lab_PicShow.setToolTip(_translate("comicBook", "左键上一页，右键下一页"))
 import img_rc
 
 
