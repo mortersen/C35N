@@ -56,6 +56,7 @@ class DBDocumentBase(QWidget):
         self.baseUI.btn_Reflash.released.connect(self.on_BtnReflash)
         self.baseUI.btn_Query.released.connect(self.on_BtnQuery)
         self.baseUI.lineEdit_Condition.returnPressed.connect(self.on_BtnQuery)
+        self.baseUI.tableView.doubleClicked.connect(self.on_tableView_DoubleClicked)
 
         #发送自定义信号
         self.baseUI.btn_ReadPDF.released.connect(self.on_ReadPDF_SignalEmit)
@@ -92,6 +93,10 @@ class DBDocumentBase(QWidget):
 
     def on_Goto(self):
         print(self.objectName())
+
+    def on_tableView_DoubleClicked(self,index):
+        #print(index)
+        self.baseUI.btn_ReadPDF.released.emit()
 
     #重新载入
     def on_BtnReflash(self):
@@ -278,7 +283,6 @@ class DBDocumentXQ(DBDocumentBase):
         self.queryModel.setQuery(sen)
         self.baseUI.lab_QueryTotal.setText("共查询到 %d 条信息" % (self.queryModel.rowCount()))
 
-
 #封装期刊
 class DBDocumentQK(DBDocumentBase):
     def __init__(self,DB):
@@ -424,7 +428,6 @@ class DBDocumentQK(DBDocumentBase):
         Title = curRec.value("Title")
         print(Title)
         self.signal_Download.emit("Periodical",MD5,Title)
-
 
 #封装图书
 class DBDocumentTS(DBDocumentBase):

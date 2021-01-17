@@ -18,6 +18,7 @@ class Ui_mainWindow(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icon/goodFish.PNG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         mainWindow.setWindowIcon(icon)
+        mainWindow.setStyleSheet("")
         self.workView = QtWidgets.QWidget(mainWindow)
         self.workView.setObjectName("workView")
         mainWindow.setCentralWidget(self.workView)
@@ -29,6 +30,7 @@ class Ui_mainWindow(object):
         self.statusbar.setObjectName("statusbar")
         mainWindow.setStatusBar(self.statusbar)
         self.toolBar = QtWidgets.QToolBar(mainWindow)
+        self.toolBar.setIconSize(QtCore.QSize(32, 32))
         self.toolBar.setObjectName("toolBar")
         mainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.action_DB = QtWidgets.QAction(mainWindow)
@@ -46,8 +48,14 @@ class Ui_mainWindow(object):
         icon3.addPixmap(QtGui.QPixmap(":/Icon/info.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_About.setIcon(icon3)
         self.action_About.setObjectName("action_About")
+        self.action_Introduce = QtWidgets.QAction(mainWindow)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/Icon/approve.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_Introduce.setIcon(icon4)
+        self.action_Introduce.setObjectName("action_Introduce")
         self.toolBar.addAction(self.action_DB)
         self.toolBar.addAction(self.action_comicBook)
+        self.toolBar.addAction(self.action_Introduce)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.action_About)
 
@@ -64,6 +72,8 @@ class Ui_mainWindow(object):
         self.action_comicBook.setToolTip(_translate("mainWindow", "《陈三五娘（彩绘连环画）》全本 绘画：孔继昭"))
         self.action_About.setText(_translate("mainWindow", "About"))
         self.action_About.setToolTip(_translate("mainWindow", "<html><head/><body><p>关于</p></body></html>"))
+        self.action_Introduce.setText(_translate("mainWindow", "介绍"))
+        self.action_Introduce.setToolTip(_translate("mainWindow", "介绍数据库"))
 import img_rc
 
 

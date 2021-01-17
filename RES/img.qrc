@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="Icon">
+    <file>approve.png</file>
+    <file>info.png</file>
     <file>address.png</file>
     <file>arrowleft.png</file>
     <file>arrowright.png</file>
