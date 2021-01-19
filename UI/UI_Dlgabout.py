@@ -51,7 +51,7 @@ class Ui_About(object):
         About.setWindowTitle(_translate("About", "About ..."))
         self.pushButton.setText(_translate("About", "OK"))
         self.label_2.setText(_translate("About", "@CopyRight 2020 LJ.QZ.FJ.China"))
-        self.label.setText(_translate("About", "陈三五娘文献数据库V1.0"))
+        self.label.setText(_translate("About", "陈三五娘文献数据库V1.1"))
 import img_rc
 
 

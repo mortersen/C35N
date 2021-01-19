@@ -187,12 +187,10 @@ class DBDocumentXQ(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("TraditionalOpera",MD5,Title)
 
     #执行查询模型
@@ -423,12 +421,10 @@ class DBDocumentQK(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("Periodical",MD5,Title)
 
 #封装图书
@@ -567,12 +563,10 @@ class DBDocumentTS(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("Book",MD5,Title)
 
 #封装南音
@@ -704,12 +698,10 @@ class DBDocumentNY(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("SouthSoundOpera",MD5,Title)
 
 #封装曲谱
@@ -842,12 +834,10 @@ class DBDocumentQP(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("SongBook",MD5,Title)
 
 #封装会议论文
@@ -999,12 +989,10 @@ class DBDocumentHYLW(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("ConferencePaper",MD5,Title)
 
 #封装学位论文
@@ -1143,12 +1131,10 @@ class DBDocumentXWLW(DBDocumentBase):
         index =  self.baseUI.tableView.currentIndex().row()
         if index < 0:
             return
-        print("下载按钮信号----->"+str(index))
         #获取选中记录
         curRec = self.queryModel.record(index)
         MD5 = curRec.value("MD5")
         Title = curRec.value("Title")
-        print(Title)
         self.signal_Download.emit("Dissertation",MD5,Title)
 
 if __name__ == "__main__":

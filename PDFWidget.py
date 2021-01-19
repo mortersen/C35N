@@ -315,6 +315,7 @@ class WidgetPDFStream(WidgetPDF):
             widget.setFixedHeight(self.LISTITEM_SIZE.height())
 
             self.listWidget.setItemWidget(listItem, widget)  # 显示到listWidget中
+            
 
         self.nCurr = 0
         self.show_current_page()
