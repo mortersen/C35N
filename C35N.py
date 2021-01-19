@@ -9,6 +9,7 @@ from PyQt5.QtSql import QSqlDatabase,QSqlQuery,QSqlQueryModel
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSignal,QThread
 from threading import Thread
+from ComicBook import ComicBook
 from UI.UI_MainWindow import Ui_mainWindow
 from UI.UI_ComicBook import Ui_comicBook
 from UI.UI_DBSourceWindow import Ui_DBSourceView
@@ -22,12 +23,6 @@ from UI.UI_DBTreeMain import Ui_DBTreeMain
 
 import img_rc
 
-#连环画图片资源路径
-picPath=[":/Icon/la1.jpg",":/Icon/la2.jpg",":/Icon/la3.jpg",":/Icon/la4.jpg",
-         ":/Icon/la5.jpg",":/Icon/la6.jpg",":/Icon/la7.jpg",":/Icon/la8.jpg",":/Icon/la9.jpg",
-         ":/Icon/la10.jpg",":/Icon/la11.jpg",":/Icon/la12.jpg",":/Icon/la13.jpg",":/Icon/la14.jpg",
-         ":/Icon/la15.jpg",":/Icon/la16.jpg"]
-
 #文献数据库表名
 tableName = ["Periodical","Book","Dissertation","ConferencePaper",
              "TraditionalOpera","SongBook","SouthSoundOpera"]
@@ -40,12 +35,13 @@ class About(QDialog):
         ui.setupUi(self)
 
 
-class IntroduceWidget(QWidget):
+class IntroduceWidget(QDialog):
     def __init__(self):
         super().__init__()
         UI = Ui_IntroduceWidget()
         UI.setupUi(self)
-
+        UI.label.setAlignment(Qt.AlignCenter)
+        self.resize(972,720)
 
 
 class MainWindow(QMainWindow):
@@ -60,21 +56,12 @@ class MainWindow(QMainWindow):
         #窗体显示最小化和关闭按钮
         #self.setWindowFlags(Qt.WindowCloseButtonHint|Qt.WindowMinimizeButtonHint)
 
+
         #设置中心控制区的QTabWidget
         self.cenTab = QTabWidget()
         self.cenTab.setTabsClosable(True)
         self.cenTab.tabCloseRequested.connect(self.on_cenTab_close)
         self.setCentralWidget(self.cenTab)
-
-        #连环画页面初始设置
-        self.comicView = QWidget()
-        self.comic = Ui_comicBook()
-        self.comic.setupUi(self.comicView)
-        self.comicView.setObjectName("COMICVIEW")
-        self.isOpenComicView = False
-        self.currentPic = -1
-        self.comic.btn_PageNext.released.connect(self.on_comic_btnPageNext)
-        self.comic.btn_PagePre.released.connect(self.on_comic_btnPagePre)
 
         #设置数据库浏览页面
         self.DBView = QWidget()
@@ -85,7 +72,6 @@ class MainWindow(QMainWindow):
         self.isOpenDBView = False
         self.tableName = ""#当前选中的数据表名
         self.DBTreeMain.tree_LeftView.clicked.connect(self.on_DBTreeMain_Clicked)
-
 
         #初始化数据库
         self.DB = None
@@ -102,21 +88,19 @@ class MainWindow(QMainWindow):
         #self.comic.btn_PagePre.setVisible(False)
         #self.comic.btn_PageNext.setVisible(False)
         #self.ui.action_comicBook.triggered.emit()
+        self.ui.action_DB.triggered.emit()
+
+
     #槽函数,显示介绍页
     def setIntroduceView(self):
         tab = IntroduceWidget()
-        self.cenTab.addTab(tab,"数据库介绍")
-        self.cenTab.setCurrentWidget(tab)
+        tab.exec()
 
     #槽函数，相应工具栏动作按钮
     def setComicView(self):
-        if self.isOpenComicView == True :
-            self.cenTab.setCurrentWidget(self.comicView)
-        else:
-            #self.comic.lab_PicShow.setPixmap(QPixmap(picPath[self.currentPic]))
-            self.cenTab.addTab(self.comicView,"简介-《陈三五娘》连环画")
-            self.isOpenComicView = True
-            print(self.comicView.objectName())
+        tab = ComicBook()
+        self.cenTab.addTab(tab,"简介-《陈三五娘》连环画")
+        self.cenTab.setCurrentWidget(tab)
 
     #槽函数，数据库浏览页
     def setDBView(self):
@@ -130,39 +114,6 @@ class MainWindow(QMainWindow):
     def setAboutDial(self):
         about = About()
         about.exec_()
-
-    #连环画下一页
-    def on_comic_btnPageNext(self):
-
-        temp = self.currentPic + 1
-        if temp > 15:
-            self.currentPic = 0
-        else:
-            self.currentPic = temp
-        pic = QPixmap(picPath[self.currentPic]).scaled(self.comic.lab_PicShow.width(),self.comic.lab_PicShow.height())
-        self.comic.lab_PicShow.setPixmap(pic)
-    #连环画上一页
-    def on_comic_btnPagePre(self):
-        temp = self.currentPic - 1
-        if temp < 0:
-            self.currentPic = 15
-        else:
-            self.currentPic = temp
-        pic = QPixmap(picPath[self.currentPic]).scaled(self.comic.lab_PicShow.width(),
-                                                       self.comic.lab_PicShow.height())
-        self.comic.lab_PicShow.setPixmap(pic)
-
-    def mousePressEvent(self,event):
-        if event.buttons() == Qt.LeftButton:
-            if self.cenTab.currentWidget().objectName() == "COMICVIEW":
-                self.comic.btn_PageNext.released.emit()
-            else:
-                return
-        if event.buttons() == Qt.RightButton:
-            if self.cenTab.currentWidget().objectName() == "COMICVIEW":
-                self.comic.btn_PagePre.released.emit()
-            else:
-                return
 
     #链接数据库
     def createDB(self):
@@ -194,12 +145,10 @@ class MainWindow(QMainWindow):
 
     #槽函数，打开标签页，阅读PDF
     def openTab2ReadPDF(self,MD5,title):
-        count = self.cenTab.count()
-        #print(count)
         stream = self.getPDFStream(self.tableName, MD5)
         tab = WidgetPDFStream(stream, title)
         self.cenTab.addTab(tab, title[0:16])
-        self.cenTab.setCurrentIndex(count+1)
+        self.cenTab.setCurrentWidget(tab)
 
 
     #槽函数，下载PDF
@@ -268,5 +217,6 @@ if __name__ == '__main__':
     mainApp = QApplication(sys.argv)
     mainWindow = MainWindow()
     mainWindow.showMaximized()
+    mainWindow.setIntroduceView()
     sys.exit(mainApp.exec_())
 

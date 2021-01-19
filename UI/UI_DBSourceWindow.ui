@@ -21,6 +21,21 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
+          <widget class="QLabel" name="lab_TableName">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>期刊库</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QComboBox" name="comboBox_SearchBy">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -33,6 +48,10 @@
              <width>0</width>
              <height>26</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">
+</string>
            </property>
            <item>
             <property name="text">
@@ -63,6 +82,9 @@
              <width>0</width>
              <height>26</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
           </widget>
          </item>

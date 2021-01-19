@@ -159,6 +159,7 @@ class DBDocumentXQ(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("戏曲库")
         #初次载入
         self.recordQuery(0)
 
@@ -298,6 +299,7 @@ class DBDocumentQK(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("期刊库")
 
         self.recordQuery(0)
 
@@ -444,6 +446,7 @@ class DBDocumentTS(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("图书库")
 
         self.recordQuery(0)
 
@@ -587,6 +590,7 @@ class DBDocumentNY(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("南音库")
 
         self.recordQuery(0)
 
@@ -723,6 +727,7 @@ class DBDocumentQP(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("歌册库")
 
         self.recordQuery(0)
 
@@ -860,6 +865,7 @@ class DBDocumentHYLW(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("会议论文库")
 
         self.recordQuery(0)
 
@@ -1016,6 +1022,7 @@ class DBDocumentXWLW(DBDocumentBase):
         self.baseUI.lab_Record.setText(str(self.totalRecord))
         self.baseUI.lab_CurrentPage.setText(str(self.currentPage))
         self.baseUI.lab_TotalPages.setText(str(self.totalPages))
+        self.baseUI.lab_TableName.setText("学位论文库")
 
         self.recordQuery(0)
 
